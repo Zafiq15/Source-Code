@@ -169,7 +169,8 @@ int main()
 
       case 8:
         cout << "Exiting the program." << endl; // Display message to indicate the program is exiting.
-        return 0;                               // Exit the program.
+        cleanup();
+        return 0; // Exit the program.
       default:
         cout << "Invalid choice." << endl; // If the input doesn't match any valid case, print an error message.
         break;
