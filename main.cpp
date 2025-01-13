@@ -7,6 +7,8 @@
 #include "printfile.h"
 #include "weatherreport.h"
 
+// Heloo there
+
 using namespace std;
 
 const string divider = "-------------------------------------------------\n";
@@ -143,7 +145,7 @@ int main()
         break;
       }
       case 4:
-      { 
+      {
         printcloudsysmbolData(minX, maxX, minY, maxY);
         promptUserToPressEnterToContinue(); // Prompt user to press <enter> to go back to the main menu after viewing the output.
         break;
@@ -156,7 +158,7 @@ int main()
       }
       case 6:
       {
-        printPressuresymbolData(minX, maxX, minY, maxY);       
+        printPressuresymbolData(minX, maxX, minY, maxY);
         promptUserToPressEnterToContinue(); // Prompt user to press <enter> to go back to the main menu after viewing the output.
         break;
       }
