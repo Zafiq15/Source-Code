@@ -5,33 +5,32 @@
 #include <iomanip>
 #include <regex>
 
-
 #include "globals.h"
 #include "printfile.h"
 #include "readFile.h"
 
-
 // print the city location data grid
 void printCityData(int minX, int maxX, int minY, int maxY)
 {
-    int gridRangeX = (maxX - minX) + 1; // 9
-    int gridRangeY = (maxY - minY) + 1; // 9
+    // Calculate the range of the grid based on the provided min and max coordinates
+    int gridRangeX = (maxX - minX) + 1;
+    int gridRangeY = (maxY - minY) + 1;
 
     cout << "\nCity location data grid: " << endl;
 
-    // Top border
+    // Print the top border of the grid
     cout << " ";
     for (int x = 0; x < gridRangeX + 2; x++)
     {
-        cout << setw(3) << setfill(' ') << "#"; // 3 spaces for alignment
+        cout << setw(3) << setfill(' ') << "#";
     }
     cout << endl;
 
-    // Grid data
+    // Print the city grid data
     for (int y = gridRangeY - 1; y >= 0; y--)
     {
-        cout << setw(2) << setfill(' ') << y << " "; // Print Y-coordinate
-        cout << "# ";                                // Left border
+        cout << setw(2) << setfill(' ') << y << " ";
+        cout << "# ";
 
         for (int x = 0; x < gridRangeX; x++)
         {
@@ -42,47 +41,49 @@ void printCityData(int minX, int maxX, int minY, int maxY)
             }
             else
             {
-                cout << setw(2) << " "; // Empty space if value is 0 or less
+                cout << setw(2) << " ";
             }
-            cout << " "; // Space between grid values
+            cout << " ";
         }
 
-        cout << " #"; // Right border
+        cout << " #";
         cout << endl;
     }
 
-    // Bottom border
+    // Print the bottom border of the grid
     cout << " ";
-    for (int x = 0; x < gridRangeX + 2; x++)
-    {
-        cout << setw(3) << setfill(' ') << "#"; // 3 spaces for alignment
-    }
-    cout << endl;
-
-    // Print column numbers (y-axis labels at the bottom)
-    cout << "    "; // Space before the labels
-    for (int y = 0; y < gridRangeY; y++)
-    {
-        cout << setw(3) << setfill(' ') << y; // Print column numbers
-    }
-    cout << endl;
-}
-
-// print the cloud location data grid
-void printcloudData(int minX, int maxX, int minY, int maxY)
-{
-    int gridRangeX = (maxX - minX) + 1; // 9
-    int gridRangeY = (maxY - minY) + 1; // 9
-
-    // print the cloud grid
-    cout << "\nCloud data grid: " << endl;
-
     for (int x = 0; x < gridRangeX + 2; x++)
     {
         cout << setw(3) << setfill(' ') << "#";
     }
     cout << endl;
 
+    // Print column numbers (y-axis labels at the bottom)
+    cout << "    ";
+    for (int y = 0; y < gridRangeY; y++)
+    {
+        cout << setw(3) << setfill(' ') << y;
+    }
+    cout << endl;
+}
+
+// Function to print the cloud location data grid
+void printcloudData(int minX, int maxX, int minY, int maxY)
+{
+    // Calculate the range of the grid based on the provided min and max coordinates
+    int gridRangeX = (maxX - minX) + 1;
+    int gridRangeY = (maxY - minY) + 1;
+
+    cout << "\nCloud data grid: " << endl;
+
+    // Print the top border of the grid
+    for (int x = 0; x < gridRangeX + 2; x++)
+    {
+        cout << setw(3) << setfill(' ') << "#";
+    }
+    cout << endl;
+
+    // print the cloud grid data
     for (int y = gridRangeY - 1; y >= 0; y--)
     {
         cout << y << " ";
@@ -96,12 +97,14 @@ void printcloudData(int minX, int maxX, int minY, int maxY)
         cout << endl;
     }
 
+    // Print the bottom border of the grid
     for (int x = 0; x < gridRangeX + 2; x++)
     {
         cout << setw(3) << setfill(' ') << "#";
     }
     cout << endl;
 
+    // Print the column labels (x-coordinates) at the bottom
     cout << "    ";
     for (int y = 0; y < gridRangeY; y++)
     {
@@ -110,29 +113,33 @@ void printcloudData(int minX, int maxX, int minY, int maxY)
     cout << endl;
 }
 
-// print the cloud location sysmbol data grid
+// Function to print the cloud location symbol data grid
 void printcloudsysmbolData(int minX, int maxX, int minY, int maxY)
 {
-    int gridRangeX = (maxX - minX) + 1; // 9
-    int gridRangeY = (maxY - minY) + 1; // 9
+    // Calculate the range of the grid based on the provided min and max coordinates
+    int gridRangeX = (maxX - minX) + 1;
+    int gridRangeY = (maxY - minY) + 1;
 
-    // print the cloud grid
     cout << "\nCloud data symbol grid: " << endl;
 
+    // Print the top border of the grid
     for (int x = 0; x < gridRangeX + 2; x++)
     {
         cout << setw(3) << setfill(' ') << "#";
     }
     cout << endl;
 
+    // print the cloud symbol grid data
     for (int y = gridRangeY - 1; y >= 0; y--)
     {
         cout << y << " ";
         cout << "# ";
         for (int x = 0; x < gridRangeX; x++)
         {
+            // Get the cloud value for the current cell
             int cloudValue = cloudData[x][y];
 
+            // Determine the symbol based on cloud value
             char symbols;
 
             if (cloudValue < 35)
@@ -154,12 +161,14 @@ void printcloudsysmbolData(int minX, int maxX, int minY, int maxY)
         cout << endl;
     }
 
+    // Print the bottom border of the grid
     for (int x = 0; x < gridRangeX + 2; x++)
     {
         cout << setw(3) << setfill(' ') << "#";
     }
     cout << endl;
 
+    // Print the column labels (x-coordinates) at the bottom
     cout << "    ";
     for (int y = 0; y < gridRangeY; y++)
     {
@@ -168,13 +177,14 @@ void printcloudsysmbolData(int minX, int maxX, int minY, int maxY)
     cout << endl;
 }
 
-// print the pressure location data grid
+// Function to print the pressure location data grid
 void printPressureData(int minX, int maxX, int minY, int maxY)
 {
-    int gridRangeX = (maxX - minX) + 1; // 9
-    int gridRangeY = (maxY - minY) + 1; // 9
+    // Calculate the range of the grid based on the provided min and max coordinates
+    int gridRangeX = (maxX - minX) + 1;
+    int gridRangeY = (maxY - minY) + 1;
 
-    // print the cloud grid
+    // Print the top border of the grid
     cout << "\nPressure data grid: " << endl;
     for (int x = 0; x < gridRangeX + 2; x++)
     {
@@ -182,6 +192,7 @@ void printPressureData(int minX, int maxX, int minY, int maxY)
     }
     cout << endl;
 
+    // print the pressure grid data
     for (int y = gridRangeY - 1; y >= 0; y--)
     {
         cout << y << " ";
@@ -195,12 +206,14 @@ void printPressureData(int minX, int maxX, int minY, int maxY)
         cout << endl;
     }
 
+    // Print the bottom border of the grid
     for (int x = 0; x < gridRangeX + 2; x++)
     {
         cout << setw(3) << setfill(' ') << "#";
     }
     cout << endl;
 
+    // Print the column labels (x-coordinates) at the bottom
     cout << "    ";
     for (int y = 0; y < gridRangeY; y++)
     {
@@ -209,28 +222,35 @@ void printPressureData(int minX, int maxX, int minY, int maxY)
     cout << endl;
 }
 
-// print the pressure location sysmbol data grid
+// Function to print the pressure location sysmbol data grid
 void printPressuresymbolData(int minX, int maxX, int minY, int maxY)
 {
-    int gridRangeX = (maxX - minX) + 1; // 9
-    int gridRangeY = (maxY - minY) + 1; // 9
+    // Calculate the range of the grid based on the provided min and max coordinates
+    int gridRangeX = (maxX - minX) + 1;
+    int gridRangeY = (maxY - minY) + 1;
 
-    // print the cloud grid
     cout << "\nPressure symbol data grid: " << endl;
+
+    // Print the top border of the grid
     for (int x = 0; x < gridRangeX + 2; x++)
     {
         cout << setw(3) << setfill(' ') << "#";
     }
     cout << endl;
 
+    // print the cloud grid data
     for (int y = gridRangeY - 1; y >= 0; y--)
     {
         cout << y << " ";
         cout << "# ";
+
+        // print the pressure symbol grid data
         for (int x = 0; x < gridRangeX; x++)
         {
+            // Get the pressure value for the current cell
             int pressure = pressureData[x][y];
 
+            // Determine the symbol based on pressure value
             char pressuresymbols;
 
             if (pressure < 35)
@@ -252,12 +272,14 @@ void printPressuresymbolData(int minX, int maxX, int minY, int maxY)
         cout << endl;
     }
 
+    // Print the bottom border of the grid
     for (int x = 0; x < gridRangeX + 2; x++)
     {
         cout << setw(3) << setfill(' ') << "#";
     }
     cout << endl;
 
+    // Print the column labels (x-coordinates) at the bottom
     cout << "    ";
     for (int y = 0; y < gridRangeY; y++)
     {

@@ -2,7 +2,10 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -g
+CXXFLAGS = -Wall -g -std=c++11
+# Uncomment the following line to enable sanitizers
+# CXXFLAGS += -fsanitize=address  # For AddressSanitizer
+# CXXFLAGS += -fsanitize=undefined  # For UndefinedBehaviorSanitizer
 
 SRC_DIR = .
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
@@ -10,8 +13,6 @@ SRCS = $(wildcard $(SRC_DIR)/*.cpp)
 # Target executable
 TARGET = main.exe
 
-# Source files
-	
 # Object files
 OBJS = $(SRCS:.cpp=.obj)
 

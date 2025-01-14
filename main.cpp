@@ -7,15 +7,16 @@
 #include "printfile.h"
 #include "weatherreport.h"
 
-// Heloo there
-
 using namespace std;
 
+// Divider string to visually separate sections in the output
 const string divider = "-------------------------------------------------\n";
 
+// information for displaying student details in the program
 const string STUDENT_INFORMATION[] = {
     "Student ID: 8496481", "Student Name: Muhammad Zafiq"};
 
+// Menu options available to the user to interact with the program
 const string OPTIONS[] = {
     "1) Read in and process a configuration file",
     "2) Display city map",
@@ -29,8 +30,11 @@ const string OPTIONS[] = {
 // Function when user select 2 to 7 press enter to return main menu
 void promptUserToPressEnterToContinue()
 {
+  // Clears any previous input from the input buffer
   cin.ignore(1000, '\n');
   string userInput = "";
+
+  // Continuously prompts user to press Enter until a valid input is given
   do
   {
     cout << "\nPress <Enter> to go back to main menu";
@@ -42,6 +46,7 @@ void promptUserToPressEnterToContinue()
 // Function to clean up dynamically allocated memory
 void cleanup()
 {
+  // Check if cityData is not null before attempting to delete it
   if (cityData != nullptr)
   {
     for (int x = 0; x < (maxX - minX + 1); x++)
@@ -51,7 +56,7 @@ void cleanup()
     delete[] cityData;
     cityData = nullptr;
   }
-
+  // Check if cloudData is not null before attempting to delete it
   if (cloudData != nullptr)
   {
     for (int x = 0; x < (maxX - minX + 1); x++)
@@ -61,7 +66,7 @@ void cleanup()
     delete[] cloudData;
     cloudData = nullptr;
   }
-
+  // Check if pressureData is not null before attempting to delete it
   if (pressureData != nullptr)
   {
     for (int x = 0; x < (maxX - minX + 1); x++)
@@ -76,43 +81,41 @@ void cleanup()
 int main()
 {
   // Display student information
-  // Iterate through each element in the STUDENT_INFORMATION array and print it to the console.
   for (const string &info : STUDENT_INFORMATION)
   {
-    cout << info << endl; // Print the student information (ID and Name) to the console.
+    cout << info << endl;
   }
-  cout << divider; // Print the divider line after displaying student information.
+  cout << divider;
 
-  // Display welcome message
   // Print a welcoming message to the user at the beginning of the program.
   cout << "Welcome to Weather Information Processing System!" << endl
        << endl;
 
-  // Display options
   // Loop through the OPTIONS array and print each menu option to the console.
   for (const string &option : OPTIONS)
   {
-    cout << option << endl; // Print each available option to the user.
+    cout << option << endl;
   }
 
   // Select and validate user input
-  // Initialize 'input' to store the user's choice.
   int input = 0;
-  while (true) // Start an infinite loop that will keep asking the user for input until a valid choice is made.
+  // Start an infinite loop that will keep asking the user for input until a valid choice is made.
+  while (true)
   {
     // Prompt the user to enter their choice (between 1 and 8).
     cout << "\nPlease enter your choice (1-8): ";
-    cin >> input; // Read the user input into the 'input' variable.
+    cin >> input;
 
     // Check if the input is valid (within range 1-8 and not an invalid input).
     if (cin.fail() || input < 1 || input > 8)
     {
       // If input is invalid, clear the error state and ignore the invalid input.
-      cin.clear(); // Clear the error state of the input stream.
+      cin.clear();
 
       // Ignore the rest of the invalid input until the next newline character.
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
-      cout << "Error: Invalid input. Please enter a number between 1 and 8." << endl; // Inform the user about the invalid input.
+
+      cout << "Error: Invalid input. Please enter a number between 1 and 8." << endl;
     }
     else
     {
@@ -124,7 +127,7 @@ int main()
         // Prompt the user to enter the configuration filename
         cout << "Please enter config filename: ";
         string filename;
-        cin >> filename; // Accept filename from the user
+        cin >> filename;
         cout << endl;
         storeConfigFileInfo(filename);
       }
@@ -132,51 +135,70 @@ int main()
 
       case 2:
       {
+        // Display the city map based on the processed data.
         printCityData(minX, maxX, minY, maxY);
-        promptUserToPressEnterToContinue(); // Prompt user to press <enter> to go back to the main menu after viewing the output.
+
+        // Prompt user to press <enter> to go back to the main menu after viewing the output.
+        promptUserToPressEnterToContinue();
         break;
       }
 
       case 3:
       {
-
+        // Display the cloud coverage map (cloudiness index) based on the processed data.
         printcloudData(minX, maxX, minY, maxY);
-        promptUserToPressEnterToContinue(); // Prompt user to press <enter> to go back to the main menu after viewing the output.
+
+        // Prompt user to press <enter> to go back to the main menu after viewing the output.
+        promptUserToPressEnterToContinue();
         break;
       }
       case 4:
       {
+        // Display the cloud coverage map (LMH symbols) based on the processed data.
         printcloudsysmbolData(minX, maxX, minY, maxY);
-        promptUserToPressEnterToContinue(); // Prompt user to press <enter> to go back to the main menu after viewing the output.
+
+        // Prompt user to press <enter> to go back to the main menu after viewing the output.
+        promptUserToPressEnterToContinue();
         break;
       }
       case 5:
       {
+        // Display the atmospheric pressure map (pressure index) based on the processed data.
         printPressureData(minX, maxX, minY, maxY);
-        promptUserToPressEnterToContinue(); // Prompt user to press <enter> to go back to the main menu after viewing the output.
+
+        // Prompt user to press <enter> to go back to the main menu after viewing the output.
+        promptUserToPressEnterToContinue();
         break;
       }
       case 6:
       {
+        // Display the atmospheric pressure map (LMH symbols) based on the processed data.
         printPressuresymbolData(minX, maxX, minY, maxY);
-        promptUserToPressEnterToContinue(); // Prompt user to press <enter> to go back to the main menu after viewing the output.
+
+        // Prompt user to press <enter> to go back to the main menu after viewing the output.
+        promptUserToPressEnterToContinue();
         break;
       }
       case 7:
-        weathersummaryreport();             // Call the function to display the weather forecast summary report.
-        promptUserToPressEnterToContinue(); // Prompt user to press <enter> to go back to the main menu after viewing the output.
+        // Print a summary report of the weather forecast based on the processed data.
+        weathersummaryreport();
+
+        // Prompt user to press <enter> to go back to the main menu after viewing the output.
+        promptUserToPressEnterToContinue();
         break;
 
       case 8:
-        cout << "Exiting the program." << endl; // Display message to indicate the program is exiting.
-        cleanup();
-        return 0; // Exit the program.
+        // Print a message to the user indicating that the program is exiting.
+        cout << "Exiting the program." << endl;
+        return 0;
       default:
-        cout << "Invalid choice." << endl; // If the input doesn't match any valid case, print an error message.
+        // Print an error message if the input doesn't match any valid case.
+        cout << "Invalid choice." << endl;
         break;
       }
     }
   }
-  cleanup(); // Clean up dynamically allocated memory before exiting the program.
+  // Clean up dynamically allocated memory before exiting the program.
+  cleanup();
   return 0;
 }
