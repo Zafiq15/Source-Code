@@ -256,7 +256,12 @@ void processGridRangeLine(const string &line, int &minX, int &maxX, int &minY, i
 // Function to store configuration file info and print out the data
 void storeConfigFileInfo(const string &filename)
 {
-    fstream inputConfigFile(filename.c_str(), fstream::in);
+    std::string fileNameLower = filename;
+    for (char &c : fileNameLower)
+    {
+        c = tolower(c);
+    }
+    fstream inputConfigFile(fileNameLower.c_str(), fstream::in);
 
     // Check if the file was successfully opened
     if (!inputConfigFile.is_open())
@@ -334,7 +339,7 @@ void storeConfigFileInfo(const string &filename)
             }
 
             std::string lowerCase = readConfigFile;
-            for (char &c : readConfigFile)
+            for (char &c : lowerCase)
             {
                 c = tolower(c);
             }
@@ -354,7 +359,7 @@ void storeConfigFileInfo(const string &filename)
         if (lineCount == 4)
         {
             std::string lowerCase = readConfigFile;
-            for (char &c : readConfigFile)
+            for (char &c : lowerCase)
             {
                 c = tolower(c);
             }
@@ -372,12 +377,12 @@ void storeConfigFileInfo(const string &filename)
         if (lineCount == 5)
         {
             std::string lowerCase = readConfigFile;
-            for (char &c : readConfigFile)
+            for (char &c : lowerCase)
             {
                 c = tolower(c);
             }
             processPressureData(lowerCase);
-            cout << readConfigFile << "...done!" << endl;
+            cout << lowerCase << "...done!" << endl;
 
             // Populate pressureData array with values from Pressure_Array
             for (int i = 0; i < Pressure_Count; i++)
