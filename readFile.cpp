@@ -256,6 +256,11 @@ void processGridRangeLine(const string &line, int &minX, int &maxX, int &minY, i
 // Function to store configuration file info and print out the data
 void storeConfigFileInfo(const string &filename)
 {
+    // clear city location array and cloud location array and pressure location array
+    cityLocationCount = 0;
+    cloudLocationCount = 0;
+    Pressure_Count = 0;
+
     fstream inputConfigFile(filename.c_str(), fstream::in);
 
     // Check if the file was successfully opened
@@ -373,11 +378,6 @@ void storeConfigFileInfo(const string &filename)
             cout << readConfigFile << "...done!" << endl;
         }
     }
-
-    // clear city location array and cloud location array and pressure location array
-    cityLocationCount = 0;
-    cloudLocationCount = 0;
-    Pressure_Count = 0;
 
     cout << "\nAll records successfully store. Going back to main menu ..." << endl;
     inputConfigFile.close();
