@@ -83,7 +83,7 @@ void processCitylocationData(const string &filename)
     // Check if the file opened successfully
     if (!inputfile)
     {
-        cerr << "Error: file cannot open" << endl;
+        cerr << "Error: file cannot open" << filename << endl;
         return;
     }
 
@@ -333,9 +333,13 @@ void storeConfigFileInfo(const string &filename)
                 }
             }
 
-            processCitylocationData(readConfigFile);
-
-            cout << readConfigFile << "...done!" << endl;
+            std::string lowerCase = readConfigFile;
+            for (char &c : readConfigFile)
+            {
+                c = tolower(c);
+            }
+            processCitylocationData(lowerCase);
+            cout << lowerCase << "...done!" << endl;
 
             // Populate cityData array with values from cityLocations_Array
             for (int i = 0; i < cityLocationCount; i++)
@@ -349,9 +353,13 @@ void storeConfigFileInfo(const string &filename)
         }
         if (lineCount == 4)
         {
-            processCloudlocationData(readConfigFile);
-
-            cout << readConfigFile << "...done!" << endl;
+            std::string lowerCase = readConfigFile;
+            for (char &c : readConfigFile)
+            {
+                c = tolower(c);
+            }
+            processCloudlocationData(lowerCase);
+            cout << lowerCase << "...done!" << endl;
 
             // Populate cloudData array with values from cloudLocation_Array
             for (int i = 0; i < cloudLocationCount; i++)
@@ -363,8 +371,12 @@ void storeConfigFileInfo(const string &filename)
         }
         if (lineCount == 5)
         {
-            processPressureData(readConfigFile);
-
+            std::string lowerCase = readConfigFile;
+            for (char &c : readConfigFile)
+            {
+                c = tolower(c);
+            }
+            processPressureData(lowerCase);
             cout << readConfigFile << "...done!" << endl;
 
             // Populate pressureData array with values from Pressure_Array
