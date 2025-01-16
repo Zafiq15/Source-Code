@@ -11,7 +11,7 @@ SRC_DIR = .
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
 
 # Target executable
-TARGET = csci251_main.app
+TARGET = csci251_a1.app
 
 # Object files
 OBJS = $(SRCS:.cpp=.obj)

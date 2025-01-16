@@ -266,24 +266,29 @@ void storeConfigFileInfo(const string &filename)
     }
 
     string readConfigFile;
-    int storing_gridXandY = 0;
-    bool isInitialized = false;
+    int lineCount = 0;
 
     // Read the configuration file line by line
     while (getline(inputConfigFile, readConfigFile))
     {
-        // Look for lines containing "Grid"
-        size_t found_Xrange = readConfigFile.find("Grid");
+        if (readConfigFile.empty())
+        {
+            continue;
+        }
+        if (readConfigFile.find("//") != string::npos)
+        {
+            continue;
+        }
+        lineCount++;
 
         // If "Grid" is found, process the grid range
-        if (found_Xrange != string::npos)
+        if (lineCount == 1 || lineCount == 2)
         {
             processGridRangeLine(readConfigFile, minX, maxX, minY, maxY);
-            storing_gridXandY++;
         }
 
         // Once both GridX and GridY ranges are found, initialize the grid data
-        if (storing_gridXandY == 2 && !isInitialized)
+        if (lineCount == 3)
         {
             // Calculate grid range for X-axis and Y-axis
             int gridRangeX = (maxX - minX) + 1;
@@ -301,8 +306,6 @@ void storeConfigFileInfo(const string &filename)
                     cityData[x][y] = 0;
                 }
             }
-            // Set flag to true indicating initialization is complete
-            isInitialized = true;
 
             // Dynamically allocate memory for cloudData array based on grid range
             cloudData = new int *[gridRangeX];
@@ -316,8 +319,6 @@ void storeConfigFileInfo(const string &filename)
                     cloudData[x][y] = 0;
                 }
             }
-            // Set flag to true indicating initialization is complete
-            isInitialized = true;
 
             // Dynamically allocate memory for pressureData array based on grid range
             pressureData = new int *[gridRangeX];
@@ -331,70 +332,55 @@ void storeConfigFileInfo(const string &filename)
                     pressureData[x][y] = 0;
                 }
             }
-            // Set flag to true indicating initialization is complete
-            isInitialized = true;
+
+            processCitylocationData(readConfigFile);
+
+            cout << readConfigFile << "...done!" << endl;
+
+            // Populate cityData array with values from cityLocations_Array
+            for (int i = 0; i < cityLocationCount; i++)
+            {
+                int x = cityLocations_Array[i].x - minX;
+                int y = cityLocations_Array[i].y - minY;
+                int cityID = cityLocations_Array[i].value;
+                cityData[x][y] = cityLocations_Array[i].value;
+                citynamearray[cityID] = cityLocations_Array[i].cityName;
+            }
         }
-
-        // Once the grid ranges are processed and initialization is done, process the data files
-        if (storing_gridXandY == 2 && isInitialized)
+        if (lineCount == 4)
         {
-            // Find the position of the file name in the line
-            size_t found_txt = readConfigFile.find("citylocation.txt");
-            size_t cloud_txt = readConfigFile.find("cloudcover.txt");
-            size_t pressure_txt = readConfigFile.find("pressure.txt");
+            processCloudlocationData(readConfigFile);
 
-            // If city location data is found, process the city location data file
-            if (found_txt != string::npos)
+            cout << readConfigFile << "...done!" << endl;
+
+            // Populate cloudData array with values from cloudLocation_Array
+            for (int i = 0; i < cloudLocationCount; i++)
             {
-                cout << "Storing Data from input file: \n"
-                     << endl;
-
-                processCitylocationData(readConfigFile);
-
-                cout << "citylocation.txt" << "...done!" << endl;
-
-                // Populate cityData array with values from cityLocations_Array
-                for (int i = 0; i < cityLocationCount; i++)
-                {
-                    int x = cityLocations_Array[i].x - minX;
-                    int y = cityLocations_Array[i].y - minY;
-                    int cityID = cityLocations_Array[i].value;
-                    cityData[x][y] = cityLocations_Array[i].value;
-                    citynamearray[cityID] = cityLocations_Array[i].cityName;
-                }
+                int x = cloudLocation_Array[i].x - minX;
+                int y = cloudLocation_Array[i].y - minY;
+                cloudData[x][y] = cloudLocation_Array[i].value;
             }
-            // If cloud cover data is found, process the cloud cover data file
-            else if (cloud_txt != string ::npos)
+        }
+        if (lineCount == 5)
+        {
+            processPressureData(readConfigFile);
+
+            cout << readConfigFile << "...done!" << endl;
+
+            // Populate pressureData array with values from Pressure_Array
+            for (int i = 0; i < Pressure_Count; i++)
             {
-                processCloudlocationData(readConfigFile);
-
-                cout << "cloudcover.txt" << "...done!" << endl;
-
-                // Populate cloudData array with values from cloudLocation_Array
-                for (int i = 0; i < cloudLocationCount; i++)
-                {
-                    int x = cloudLocation_Array[i].x - minX;
-                    int y = cloudLocation_Array[i].y - minY;
-                    cloudData[x][y] = cloudLocation_Array[i].value;
-                }
-            }
-            // If pressure data is found, process the pressure data file
-            else if (pressure_txt != string::npos)
-            {
-                processPressureData(readConfigFile);
-
-                cout << "pressure.txt" << "...done!" << endl;
-
-                // Populate pressureData array with values from Pressure_Array
-                for (int i = 0; i < Pressure_Count; i++)
-                {
-                    int x = Pressure_Array[i].x - minX;
-                    int y = Pressure_Array[i].y - minY;
-                    pressureData[x][y] = Pressure_Array[i].value;
-                }
+                int x = Pressure_Array[i].x - minX;
+                int y = Pressure_Array[i].y - minY;
+                pressureData[x][y] = Pressure_Array[i].value;
             }
         }
     }
+
+    // clear city location array and cloud location array and pressure location array
+    cityLocationCount = 0;
+    cloudLocationCount = 0;
+    Pressure_Count = 0;
 
     cout << "\nAll records successfully store. Going back to main menu ..." << endl;
     inputConfigFile.close();
