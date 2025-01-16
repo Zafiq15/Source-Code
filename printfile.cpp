@@ -34,14 +34,14 @@ void printCityData(int minX, int maxX, int minY, int maxY)
 
         for (int x = 0; x < gridRangeX; x++)
         {
-            // Print city data or space if not greater than 0
-            if (cityData[x][y] > 0)
+            int cityID = cityData[x][y];
+            if (citynamearray[cityID] != "")
             {
-                cout << setw(2) << setfill(' ') << cityData[x][y];
+                cout << setw(2) << setfill(' ') << cityID;
             }
             else
             {
-                cout << setw(2) << " ";
+                cout << setw(2) << setfill(' ') << "";
             }
             cout << " ";
         }
@@ -146,7 +146,7 @@ void printcloudsysmbolData(int minX, int maxX, int minY, int maxY)
             {
                 symbols = 'L';
             }
-            else if (cloudValue < 66)
+            else if (cloudValue < 65)
             {
                 symbols = 'M';
             }
@@ -257,7 +257,7 @@ void printPressuresymbolData(int minX, int maxX, int minY, int maxY)
             {
                 pressuresymbols = 'L';
             }
-            else if (pressure < 66)
+            else if (pressure < 65)
             {
                 pressuresymbols = 'M';
             }
