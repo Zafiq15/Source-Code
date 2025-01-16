@@ -256,12 +256,7 @@ void processGridRangeLine(const string &line, int &minX, int &maxX, int &minY, i
 // Function to store configuration file info and print out the data
 void storeConfigFileInfo(const string &filename)
 {
-    std::string fileNameLower = filename;
-    for (char &c : fileNameLower)
-    {
-        c = tolower(c);
-    }
-    fstream inputConfigFile(fileNameLower.c_str(), fstream::in);
+    fstream inputConfigFile(filename.c_str(), fstream::in);
 
     // Check if the file was successfully opened
     if (!inputConfigFile.is_open())
@@ -338,13 +333,8 @@ void storeConfigFileInfo(const string &filename)
                 }
             }
 
-            std::string lowerCase = readConfigFile;
-            for (char &c : lowerCase)
-            {
-                c = tolower(c);
-            }
-            processCitylocationData(lowerCase);
-            cout << lowerCase << "...done!" << endl;
+            processCitylocationData(readConfigFile);
+            cout << readConfigFile << "...done!" << endl;
 
             // Populate cityData array with values from cityLocations_Array
             for (int i = 0; i < cityLocationCount; i++)
@@ -358,13 +348,8 @@ void storeConfigFileInfo(const string &filename)
         }
         if (lineCount == 4)
         {
-            std::string lowerCase = readConfigFile;
-            for (char &c : lowerCase)
-            {
-                c = tolower(c);
-            }
-            processCloudlocationData(lowerCase);
-            cout << lowerCase << "...done!" << endl;
+            processCloudlocationData(readConfigFile);
+            cout << readConfigFile << "...done!" << endl;
 
             // Populate cloudData array with values from cloudLocation_Array
             for (int i = 0; i < cloudLocationCount; i++)
@@ -376,13 +361,7 @@ void storeConfigFileInfo(const string &filename)
         }
         if (lineCount == 5)
         {
-            std::string lowerCase = readConfigFile;
-            for (char &c : lowerCase)
-            {
-                c = tolower(c);
-            }
-            processPressureData(lowerCase);
-            cout << lowerCase << "...done!" << endl;
+            processPressureData(readConfigFile);
 
             // Populate pressureData array with values from Pressure_Array
             for (int i = 0; i < Pressure_Count; i++)
@@ -391,6 +370,7 @@ void storeConfigFileInfo(const string &filename)
                 int y = Pressure_Array[i].y - minY;
                 pressureData[x][y] = Pressure_Array[i].value;
             }
+            cout << readConfigFile << "...done!" << endl;
         }
     }
 
