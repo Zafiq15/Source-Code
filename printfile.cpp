@@ -32,6 +32,7 @@ void printCityData(int minX, int maxX, int minY, int maxY)
         cout << setw(2) << setfill(' ') << y << " ";
         cout << "# ";
 
+        // Print the city ID or empty space based on the city name
         for (int x = 0; x < gridRangeX; x++)
         {
             int cityID = cityData[x][y];
