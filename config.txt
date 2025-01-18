@@ -10,13 +10,13 @@ GridY_IdxRange=0-8
 
 // [x, y] grid-areas which are occupied by cities 
 
-testCases_cityLocation.txt
+Test_CityLocation.txt
 
 // "next day" forecasted cloud coverage (%) for
 // each [x, y] grid-area
 
-testCases_cloudCover.txt
+Test_CloudCover.txt
 
 // "next day" forecasted atmospheric pressure intensity (%) for 
 // each [x, y] grid-area 
-testCases_PressureData.txt
+Test_Pressure.txt
